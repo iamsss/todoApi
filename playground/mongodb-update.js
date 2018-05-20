@@ -23,4 +23,21 @@ db.collection('Todos').findOneAndUpdate({text: "This is Saurav"},
 console.log(result);
 });
 
+
+db.collection('Users').findOneAndUpdate({name: "Saurav"}, 
+{ $set: {
+    location: "Bhagalpur"
+    },
+    $inc: {
+        age : 1
+    }
+},
+{
+    returnOriginal: false
+}
+
+).then((result) => {
+console.log(result);
+});
+
 });
