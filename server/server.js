@@ -5,13 +5,18 @@ mongoose.connect('mongodb://localhost:27017/Todos');
 
 var Todo = mongoose.model('Todo', {
     text: {
-        type: String
+        type: String,
+        required: true,
+        minlength: 1,
+        trim: true // for triming starting and ending white space
     },
     completed:{
-        type: Boolean
+        type: Boolean,
+        default: false
     },
     completedAt: {
-        type: Number
+        type: Number,
+        default: null
     }
 });
 
@@ -25,14 +30,31 @@ var Todo = mongoose.model('Todo', {
 //     console.log('Unable to save data')
 // }) // for saving data
 
-var otherTodo = new Todo({
-    text: 'Cook dinner',
-    completed: true,
-    completedAt: 21
+// var otherTodo = new Todo({
+//     text: 'Hey Savurav   '
+// });
+
+// otherTodo.save().then((doc)=> {
+//     console.log('Save Todo',doc);
+// },(e)=>{
+//     console.log('Unable to save data')
+// }) // for saving data
+
+var User = mongoose.model('User', {
+    email: {
+        type: String,
+        required: true,
+        minlength: 1,
+        trim: true // for triming starting and ending white space
+    }
 });
 
-otherTodo.save().then((doc)=> {
-    console.log('Save Todo',doc);
+var user1 = new User({
+    email: 'saurav9760@gmail.com'
+});
+
+user1.save().then((doc)=> {
+    console.log('Save User',doc);
 },(e)=>{
     console.log('Unable to save data')
 }) // for saving data
