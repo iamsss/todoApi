@@ -29,7 +29,7 @@ module.exports = {app};
 
 app.listen(3000, () => {
     console.log('started on port 3000')
-})
+});
 
 app.get('/todos',(req,res) => {
     Todo.find().then((todos) => {
@@ -38,5 +38,5 @@ app.get('/todos',(req,res) => {
     },(e) => {
         console.log('There is Error');
         res.status(400).send(e);
-    })
-})
+    });
+});
