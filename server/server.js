@@ -27,8 +27,6 @@ app.post('/todos',(req,res) => {
 })
 
 
-module.exports = {app};
-
 
 
 app.get('/todos',(req,res) => {
@@ -57,5 +55,9 @@ app.get('/todos/:id',(req,res) => {
 });
 
 app.listen(port, () => {
-    console.log(`Started at por ${por}`)
+    console.log(`Started at por ${port}`)
 });
+
+
+
+module.exports = {app};
