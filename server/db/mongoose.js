@@ -7,7 +7,6 @@ try
     mongoose.connect(process.env.MONGODB_URI || 3000, function (err) {
         // Log Error
         if (err) {
-        console.error(chalk.red('Could not connect to MongoDB!'));
         console.log(err);
         } else {
         
