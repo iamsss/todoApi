@@ -1,6 +1,4 @@
-var env = process.env.NODE_ENV;
-
-
+require('./config/config');
 const _ = require('lodash');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -123,11 +121,13 @@ app.post('/users',(req,res) => {
    res.send(req.user)
  });
 
-
+if(process.env.NODE_ENV != 'test') {
 app.listen(port, () => {
     console.log(`Started at por ${port}`)
 });
-
+}else{
+    console.log("Testing process");
+}
 
 
 module.exports = {app};
