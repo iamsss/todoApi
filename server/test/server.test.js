@@ -265,3 +265,41 @@ describe('POST /users',() => {
     })
 })
 
+describe('Login Test /users/login',() => {
+
+    it('should return 400 when wrong email send',(done) => {
+        var email = 'saura@gmail.com';
+        var password = 'qw342dfse';
+
+        request(app)
+        .post('/users/login')
+        .send({ email, password })
+        .expect(400).end(done);
+    });
+
+    it('should return 400 when wrong password send',(done) => {
+        var email = 'saurav@gmail.com';
+        var password = 'qw342dfsse';
+
+        request(app)
+        .post('/users/login')
+        .send({ email, password })
+        .expect(400).end(done);
+    });
+
+    it('should login sucess when correct email n pass given',(done) => {
+        var email = 'saurav@gmail.com';
+        var password = 'password';
+
+        request(app)
+        .post('/users/login')
+        .send({ email, password })
+        .expect(200).expect((res) => {
+            expect(res.headers['x-auth']).toExist();
+            expect(res.body.email).toExist(); 
+            expect(res.body._id).toExist();
+        }).end(done);
+    })
+
+});
+

@@ -9,6 +9,7 @@ const {Todo} = require('./models/todo');
 const {User} = require('./models/user');
 const {ObjectID} = require('mongodb');
 const {authenticate} = require('./middleware/authenticate');
+const {bcrypt} = require('bcryptjs');
 
 const port = process.env.PORT || 3000;
 
@@ -121,13 +122,28 @@ app.post('/users',(req,res) => {
    res.send(req.user)
  });
 
-// if(process.env.NODE_ENV != 'test') {
-// app.listen(port, () => {
-//     console.log(`Started at por ${port}`)
-// });
-// }else{
-//     console.log("Testing process");
-// }
+
+ app.post('/users/login',(req,res) => {
+    var body = _.pick(req.body,['email','password']);
+    User.findByCredentials(body.email,body.password)
+        .then((user) => {
+                user.generateAuthToken().then((token) => {
+                    res.header('x-auth',token).send(user);
+                });
+        }).catch((e) => {
+            res.status(400).send();
+        });
+    
+ })
+
+
+if(process.env.NODE_ENV != 'test') {
+app.listen(port, () => {
+    console.log(`Started at por ${port}`)
+});
+}else{
+    console.log("Testing process");
+}
 
 
 module.exports = {app};
