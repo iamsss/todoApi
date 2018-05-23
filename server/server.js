@@ -7,6 +7,7 @@ const {mongoose} = require('./db/mongoose');
 const {Todo} = require('./models/todo');
 const {User} = require('./models/user');
 const {ObjectID} = require('mongodb');
+const {authenticate} = require('./middleware/authenticate');
 
 const port = process.env.PORT || 3000;
 
@@ -28,17 +29,6 @@ app.post('/todos',(req,res) => {
 })
 
 
-app.post('/users',(req,res) => {
-    var body = _.pick(req.body,['email','password']);
-    var user = new User(body);
-    user.save().then(() => {
-        return user.generateAuthToken();
-    }).then((token) => {
-        res.header('x-auth', token).send(user);
-    }).catch((e) => {
-        console.log('There is Some Error', e);
-    });
- })
 
 
 
@@ -110,6 +100,25 @@ app.delete('/todos/:id', (req,res) => {
         res.send('There is some Error', e);
     });
 });
+
+
+
+app.post('/users',(req,res) => {
+    var body = _.pick(req.body,['email','password']);
+    var user = new User(body);
+    user.save().then(() => {
+        return user.generateAuthToken();
+    }).then((token) => {
+        res.header('x-auth', token).send(user);
+    }).catch((e) => {
+        console.log('There is Some Error', e);
+    });
+ });
+
+ app.get('/users/me',authenticate,(req,res) => {
+   res.send(req.user)
+ });
+
 
 app.listen(port, () => {
     console.log(`Started at por ${port}`)
