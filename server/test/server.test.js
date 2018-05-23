@@ -3,20 +3,12 @@ const request = require('supertest');
 
 const {app} = require('./../server');
 const {Todo} = require('./../models/todo');
+const {todos,populateTodos,populateUsers, users} = require('./seed/seed');
 
 
-// Dummy Data
-const todos = [{
-    text: 'First test Todo'
-}, {
-    text: 'Second test todos'
-}]
 
-beforeEach((done) => {
-    Todo.remove({}).then(() => {
-        Todo.insertMany(todos);
-    }).then(() => done());
-}); // Just to clear data
+beforeEach(populateTodos); // Just to clear data
+beforeEach(populateUsers);
 describe('POST /todos', () => {
     // it('should create a new todo', (done) => {
     //     var text ='Test';
