@@ -54,7 +54,7 @@ app.get('/todos/:id',(req,res) => {
         }
         res.send(todo);
     }).catch((e) => {
-        res.send('There is some Error', e);
+        res.status(404).send();
     })
 });
 
@@ -92,6 +92,7 @@ app.delete('/todos/:id', (req,res) => {
     }
 
     Todo.findByIdAndRemove(id).then((todo) => {
+        
         if(!todo){
             return res.status(404).send('Todo Not found for this id');
         }
@@ -112,7 +113,6 @@ app.post('/users',(req,res) => {
     }).then((token) => {
         res.header('x-auth', token).send(user);
     }).catch((e) => {
-        console.log('There is Some Error', e);
         res.status(404).send(e);
     });
  });
@@ -121,13 +121,13 @@ app.post('/users',(req,res) => {
    res.send(req.user)
  });
 
-if(process.env.NODE_ENV != 'test') {
-app.listen(port, () => {
-    console.log(`Started at por ${port}`)
-});
-}else{
-    console.log("Testing process");
-}
+// if(process.env.NODE_ENV != 'test') {
+// app.listen(port, () => {
+//     console.log(`Started at por ${port}`)
+// });
+// }else{
+//     console.log("Testing process");
+// }
 
 
 module.exports = {app};
