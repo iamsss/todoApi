@@ -7,6 +7,7 @@ const {User} = require('./../../models/user');
 const userOneId = new ObjectID();
 const userTwoId = new ObjectID();
 
+console.log('Secret : ',process.env.JWT_SECRET);
 
 const users = [{
 _id: userOneId,
@@ -14,7 +15,7 @@ email: 'saurav@gmail.com',
 password: 'password',
 tokens: [{
     access: 'auth',
-    token: jwt.sign({_id:userOneId, access: 'auth'},'abc123').toString()
+    token: jwt.sign({_id:userOneId, access: 'auth'},process.env.JWT_SECRET).toString()
 }]
 }, {
     _id: userTwoId,
@@ -22,7 +23,7 @@ tokens: [{
     password: 'qwert12345',
     tokens: [{
         access: 'auth',
-        token: jwt.sign({_id:userTwoId, access: 'auth'},'abc123').toString()
+        token: jwt.sign({_id:userTwoId, access: 'auth'},process.env.JWT_SECRET).toString()
     }]
      
 
