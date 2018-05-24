@@ -119,7 +119,12 @@ app.post('/users',(req,res) => {
  });
 
  app.get('/users/me',authenticate,(req,res) => {
-   res.send(req.user)
+    if(req.user) {
+
+        res.send(req.user)
+    }else {
+        res.status(404).send('User Not Found');
+    }
  });
 
 
@@ -136,6 +141,13 @@ app.post('/users',(req,res) => {
     
  })
 
+ app.delete('/users/me/token', authenticate,(req,res) => {
+    req.user.removeToken(req.token).then(() => {
+        res.status(200).send('Token Deleted');
+    }, () => {
+        res.status(400).send();
+    });
+ });
 
 if(process.env.NODE_ENV != 'test') {
 app.listen(port, () => {
