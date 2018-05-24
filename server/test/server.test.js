@@ -18,6 +18,8 @@ const {
     User
 } = require('./../models/user');
 
+/* In expect upgrade tobeExist is similar to tobetruthy
+ and tonotbeexist is tobe falsy */
 
 
 beforeEach(populateTodos); // Just to clear data
@@ -317,8 +319,8 @@ describe('POST /users', () => {
                 password
             })
             .expect(200).expect((res) => {
-                expect(res.headers['x-auth']).toExist();
-                expect(res.body._id).toExist();
+                expect(res.headers['x-auth']).toBeTruthy();
+                expect(res.body._id).toBeTruthy();
             }).end(done);
     })
 
@@ -375,9 +377,9 @@ describe('Login Test /users/login', () => {
                 password
             })
             .expect(200).expect((res) => {
-                expect(res.headers['x-auth']).toExist();
-                expect(res.body.email).toExist();
-                expect(res.body._id).toExist();
+                expect(res.headers['x-auth']).toBeTruthy();
+                expect(res.body.email).toBeTruthy();
+                expect(res.body._id).toBeTruthy();
             }).end(done);
     })
 
