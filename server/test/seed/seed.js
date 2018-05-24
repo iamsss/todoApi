@@ -39,11 +39,13 @@ const populateUsers = (done) => {
 
 const todos = [{
     _id: new ObjectID(),
-    text: 'First test Todo'
+    text: 'First test Todo',
+    _creator: userOneId
 }, {
-    _id:new ObjectID(),
+    _id: new ObjectID(),
     text: 'Second test todos',
-    completed: true
+    completed: true,
+    _creator: userTwoId
 }];
 
 const populateTodos = (done) => {
